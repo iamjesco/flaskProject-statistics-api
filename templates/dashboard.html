@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+	{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			{% for category, message in messages %}
+				<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+					<span>{{ message }}</span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+
+
+	<form class="forms" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<h4 class="forms-header">Add Data</h4>
+
+	{% for field in form if field.widget.input_type != 'hidden' %}
+		<div class="forms-fields">
+			{{ field.label(class='forms-label') }}
+				{% if field.errors %}
+					{{ field(class='forms-input is-invalid') }}
+						<div class="invalid-feedback text-danger">
+							{% for error in field.errors %}
+								<small>
+									{{ error }}
+								</small>
+							{% endfor %}
+						</div>
+				{% else %}
+					{{ field(class='forms-input') }}
+				{% endif %}
+			</div>
+		{% endfor %}
+
+		<div class="forms-fields">
+			<button type="submit" class="btn forms-btn">Create Post</button>
+		</div>
+	</form>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
